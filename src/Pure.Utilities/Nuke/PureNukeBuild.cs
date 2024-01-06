@@ -14,7 +14,7 @@ using Nuke.Common.Tools.Slack;
 using System;
 using System.Text;
 using static Nuke.Common.Tools.Slack.SlackTasks;
-
+using System.IO.Compression;
 
 namespace Pure.Utilities.Nuke;
 
@@ -77,5 +77,20 @@ public abstract class PureNukeBuild : NukeBuild
         SendSlackMessage(_ => _
                 .SetText($"{DateTime.Now}: {message}"),
             $"https://hooks.slack.com/services/{SlackWebhook}");
+    }
+
+    protected AbsolutePath CreateZipDeployment(AbsolutePath artifactsDirectory, AbsolutePath deploymentDirectory)
+    {
+        var zipFile = deploymentDirectory / "deployment.zip";
+
+        if (File.Exists(zipFile))
+            File.Delete(zipFile);
+
+        if (!Directory.Exists(deploymentDirectory))
+            Directory.CreateDirectory(deploymentDirectory);
+
+        ZipFile.CreateFromDirectory(artifactsDirectory, zipFile);
+
+        return zipFile;
     }
 }
