@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\src\Pure.Utilities\Nuke\PureNukeBuild.cs" Link="PureNukeBuild.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="7.0.6" />
   </ItemGroup>
 

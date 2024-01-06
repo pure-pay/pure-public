@@ -9,16 +9,11 @@ using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
-using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.MinVer;
-using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities.Collections;
-using System;
+using Pure.Utilities.Nuke;
 using System.Linq;
-using System.Text;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.Tools.Slack.SlackTasks;
 
 [GitHubActions(
     "continuous",
@@ -26,11 +21,9 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     On = new[] { GitHubActionsTrigger.Push },
     InvokedTargets = new[] { nameof(Publish) },
     ImportSecrets = new[] { nameof(NugetApiKey), nameof(SlackWebhook) })]
-class Build : NukeBuild
+class Build : PureNukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Compile);
-
-    readonly StringBuilder _slackUpdate = new StringBuilder();
 
     [Parameter]
     readonly string NugetApiUrl = "https://api.nuget.org/v3/index.json"; //default
@@ -39,29 +32,10 @@ class Build : NukeBuild
     [Secret]
     readonly string NugetApiKey;
 
-    [Parameter]
-    [Secret]
-    readonly string SlackWebhook;
-
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [Solution]
-    readonly Solution Solution;
-
-    [GitRepository]
-    readonly GitRepository GitRepository;
-
-    [MinVer]
-    readonly MinVer MinVer;
-
-    AbsolutePath SourceDirectory => RootDirectory / "src";
-
-    AbsolutePath TestDirectory => RootDirectory / "test";
-
-    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
-
-    string ProjectTitle => "Pure.Public";
+    protected override string ProjectTitle => "Pure.Public";
 
     Target Clean => _ => _
         .Requires(() => SlackWebhook)
@@ -135,40 +109,4 @@ class Build : NukeBuild
                     .SetApiKey(NugetApiKey)
                 ));
         });
-
-    protected override void OnBuildCreated()
-    {
-        _slackUpdate.AppendLine($"Building *{ProjectTitle}*...");
-
-        base.OnBuildCreated();
-    }
-
-    protected override void OnTargetFailed(string target)
-    {
-        _slackUpdate.AppendLine($" • {target} failed");
-
-        base.OnTargetFailed(target);
-    }
-
-    protected override void OnTargetSucceeded(string target)
-    {
-        _slackUpdate.AppendLine($" • {target} succeeded");
-
-        base.OnTargetSucceeded(target);
-    }
-
-    protected override void OnBuildFinished()
-    {
-        _slackUpdate.AppendLine("Completed");
-
-        NotifyBuildUpdate(_slackUpdate.ToString());
-
-        base.OnBuildFinished();
-    }
-    private void NotifyBuildUpdate(string message)
-    {
-        SendSlackMessage(_ => _
-                .SetText($"{DateTime.Now}: {message}"),
-            $"https://hooks.slack.com/services/{SlackWebhook}");
-    }
 }
