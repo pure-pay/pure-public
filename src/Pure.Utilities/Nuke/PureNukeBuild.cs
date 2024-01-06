@@ -12,9 +12,10 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Tools.Slack;
 using System;
+using System.IO;
+using System.IO.Compression;
 using System.Text;
 using static Nuke.Common.Tools.Slack.SlackTasks;
-using System.IO.Compression;
 
 namespace Pure.Utilities.Nuke;
 
