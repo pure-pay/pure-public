@@ -121,6 +121,8 @@ class Build : NukeBuild
         .DependsOn(Pack)
         .Executes(() =>
         {
+            _slackUpdate.AppendLine($"  ->  Publishing package(s) as version {GitRepository.Tags.Last()}");
+
             var packageFiles = ArtifactsDirectory
                 .GlobFiles("*.nupkg")
                 .Where(x => !x.ToString().EndsWith("symbols.nupkg"))
@@ -143,14 +145,14 @@ class Build : NukeBuild
 
     protected override void OnTargetFailed(string target)
     {
-        _slackUpdate.AppendLine($"- {target} failed");
+        _slackUpdate.AppendLine($" • {target} failed");
 
         base.OnTargetFailed(target);
     }
 
     protected override void OnTargetSucceeded(string target)
     {
-        _slackUpdate.AppendLine($"- {target} succeeded");
+        _slackUpdate.AppendLine($" • {target} succeeded");
 
         base.OnTargetSucceeded(target);
     }
