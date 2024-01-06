@@ -90,4 +90,4 @@ csharp_space_around_binary_operators = before_and_after
 # Paytools specifics
 
 dotnet_diagnostic.IDE0073.severity = warning
-file_header_template = \nCopyright (c) 2023-2024, Pure Software Ltd.  All rights reserved.\n\nThis source code is the intellectual property of Pure Software\nLtd and for information security purposes is classified as\nCOMPANY CONFIDENTIAL.\n
+file_header_template = \nCopyright (c) 2023-2024, Pure Software Ltd.  All rights reserved.\n\nPure Software licenses this file to you under the following license(s):\n\n * The MIT License, see https://opensource.org/license/mit/

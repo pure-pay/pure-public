@@ -1,10 +1,9 @@
 //
 // Copyright (c) 2023-2024, Pure Software Ltd.  All rights reserved.
 //
-// This source code is the intellectual property of Pure Software
-// Ltd and for information security purposes is classified as
-// COMPANY CONFIDENTIAL.
+// Pure Software licenses this file to you under the following license(s):
 //
+//  * The MIT License, see https://opensource.org/license/mit/
 
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
@@ -18,16 +17,15 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
-//[GitHubActions(
-//    "continuous",
-//    GitHubActionsImage.UbuntuLatest,
-//    On = new[] { GitHubActionsTrigger.Push },
-//    InvokedTargets = new[] { nameof(Publish) },
-//    ImportSecrets = new[] { nameof(NugetApiKey) })]
+[GitHubActions(
+    "continuous",
+    GitHubActionsImage.UbuntuLatest,
+    On = new[] { GitHubActionsTrigger.Push },
+    InvokedTargets = new[] { nameof(Publish) },
+    ImportSecrets = new[] { nameof(NugetApiKey), nameof(SlackWebhook) })]
 class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Compile);
@@ -125,7 +123,7 @@ class Build : NukeBuild
         {
             var packageFiles = ArtifactsDirectory
                 .GlobFiles("*.nupkg")
-                .Where(x => !x.ToString().EndsWith("symbols.nupkg") && !x.ToString().Contains("Payetools.Testing"))
+                .Where(x => !x.ToString().EndsWith("symbols.nupkg"))
                 .ToList();
 
             packageFiles.ForEach(p =>

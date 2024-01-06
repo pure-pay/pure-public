@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pure.Utilities", "src\Pure.Utilities\Pure.Utilities.csproj", "{E3482A21-734D-4435-820C-9AFF261C2E77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C761A5CB-11F8-4F0E-A177-D8742A7689C0}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{21E83628-BA5F-4B7B-A291-E3DD197EE918}"
 EndProject

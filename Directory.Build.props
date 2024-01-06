@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+	
+	<PropertyGroup>
+		<Authors>Pure Software Ltd</Authors>
+		<Copyright>Copyright (c) 2023-2024, Pure Software Ltd</Copyright>
+		<Company>Pure Software Ltd</Company>
+		<PackageProjectUrl>https://github.com/pure-pay/pure-public</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/pure-pay/pure-public</RepositoryUrl>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="MinVer" Version="4.3.0" PrivateAssets="All"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(SolutionDir)/src/shared/LICENSE.md" Pack="true" PackagePath="" />
+		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+</Project>
