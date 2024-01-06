@@ -115,7 +115,7 @@ class Build : NukeBuild
         });
 
     Target Publish => _ => _
-        .OnlyWhenDynamic(() => GitRepository.IsOnMainOrMasterBranch() && GitRepository.Tags.Any())
+        .OnlyWhenDynamic(() => GitRepository.Tags.Any())
         .Requires(() => NugetApiKey)
         .Requires(() => NugetApiUrl)
         .DependsOn(Pack)
