@@ -27,7 +27,7 @@ public class AppServiceDeployment
 
         httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", base64Auth);
 
-        var requestUrl = $"https://{appServiceName}.scm.azurewebsites.net/api/zipdeploy";
+        var requestUrl = $"{appServiceName}.scm.azurewebsites.net:443";
 
         var response = await httpClient.PostAsync(requestUrl, content);
 
