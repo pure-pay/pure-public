@@ -61,6 +61,7 @@ class Build : PureNukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
+                .SetAssemblyVersion(MinVer.Version)
                 .EnableNoRestore());
         });
 
