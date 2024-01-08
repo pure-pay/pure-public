@@ -11,7 +11,14 @@ namespace Pure.Utilities.Azure;
 
 public class AppServiceDeployment
 {
-    public static async Task DeployAsync(string zipFilePath, string appServiceName, string username, string password)
+    private readonly Serilog.ILogger _logger;
+
+    public AppServiceDeployment(Serilog.ILogger logger)
+    {
+        _logger = logger;
+    }
+
+    public async Task DeployAsync(string zipFilePath, string appServiceName, string username, string password)
     {
         var base64Auth = Convert.ToBase64String(Encoding.Default.GetBytes($"{username}:{password}"));
 
@@ -28,6 +35,8 @@ public class AppServiceDeployment
         httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", base64Auth);
 
         var requestUrl = $"{appServiceName}.scm.azurewebsites.net:443";
+
+        _logger.Information("Deploying {bytes} bytes to {url}", fileContents.Length, requestUrl);
 
         var response = await httpClient.PostAsync(requestUrl, content);
 
