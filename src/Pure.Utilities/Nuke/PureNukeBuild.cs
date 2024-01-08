@@ -55,6 +55,7 @@ public abstract class PureNukeBuild : NukeBuild
 
         base.OnBuildFinished();
     }
+
     protected void NotifyBuildUpdate(string message)
     {
         if (SlackWebhook != null)

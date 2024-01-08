@@ -21,7 +21,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.UbuntuLatest,
-    On = new[] { GitHubActionsTrigger.Push },
+    On = [GitHubActionsTrigger.Push],
     InvokedTargets = [nameof(Publish)],
     ImportSecrets = [nameof(NugetApiKey), nameof(SlackWebhook)])]
 class Build : PureNukeBuild
@@ -76,7 +76,8 @@ class Build : PureNukeBuild
         .Executes(() =>
         {
             DotNetRestore(s => s
-                .SetProjectFile(Solution));
+                .SetProjectFile(Solution)
+                .EnableNoCache());
         });
 
     Target Compile => _ => _
