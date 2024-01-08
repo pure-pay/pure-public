@@ -21,7 +21,7 @@ namespace Pure.Utilities.Nuke;
 
 public abstract class PureNukeBuild : NukeBuild
 {
-    protected readonly StringBuilder _slackUpdate = new StringBuilder();
+    protected readonly StringBuilder _updateText = new StringBuilder();
 
     [Parameter]
     [Secret]
@@ -46,38 +46,41 @@ public abstract class PureNukeBuild : NukeBuild
 
     protected override void OnBuildCreated()
     {
-        _slackUpdate.AppendLine($"Building *{ProjectTitle}*...");
+        _updateText.AppendLine($"Building *{ProjectTitle}*...");
 
         base.OnBuildCreated();
     }
 
     protected override void OnTargetFailed(string target)
     {
-        _slackUpdate.AppendLine($" • {target} failed");
+        _updateText.AppendLine($" • {target} failed");
 
         base.OnTargetFailed(target);
     }
 
     protected override void OnTargetSucceeded(string target)
     {
-        _slackUpdate.AppendLine($" • {target} succeeded");
+        _updateText.AppendLine($" • {target} succeeded");
 
         base.OnTargetSucceeded(target);
     }
 
     protected override void OnBuildFinished()
     {
-        _slackUpdate.AppendLine("Completed");
+        _updateText.AppendLine("Completed");
 
-        NotifyBuildUpdate(_slackUpdate.ToString());
+        NotifyBuildUpdate(_updateText.ToString());
 
         base.OnBuildFinished();
     }
     protected void NotifyBuildUpdate(string message)
     {
-        SendSlackMessage(_ => _
-                .SetText($"{DateTime.Now}: {message}"),
-            $"https://hooks.slack.com/services/{SlackWebhook}");
+        if (SlackWebhook != null)
+        {
+            SendSlackMessage(_ => _
+                    .SetText($"{DateTime.Now}: {message}"),
+                $"https://hooks.slack.com/services/{SlackWebhook}");
+        }
     }
 
     protected AbsolutePath CreateZipDeployment(AbsolutePath artifactsDirectory, AbsolutePath deploymentDirectory)

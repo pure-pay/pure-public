@@ -12,6 +12,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities.Collections;
 using Pure.Utilities.Nuke;
+using System;
 using System.Linq;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
@@ -37,8 +38,15 @@ class Build : PureNukeBuild
 
     protected override string ProjectTitle => "Pure.Public";
 
+    protected Target Status => _ => _
+    .Executes(() =>
+    {
+        Console.WriteLine($"Git Branch: {GitRepository.Branch}");
+        Console.WriteLine($"Git Tag(s): {string.Join(",", GitRepository.Tags?.ToArray())}");
+        Console.WriteLine($"MinVer.FileVersion = {MinVer.FileVersion}");
+    });
+
     Target Clean => _ => _
-        .Requires(() => SlackWebhook)
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(d => d.DeleteDirectory());
@@ -61,7 +69,7 @@ class Build : PureNukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(MinVer.Version)
+                .SetVersion(MinVer.FileVersion)
                 .EnableNoRestore());
         });
 
@@ -96,7 +104,7 @@ class Build : PureNukeBuild
         .DependsOn(Pack)
         .Executes(() =>
         {
-            _slackUpdate.AppendLine($"  ->  Publishing package(s) as version {GitRepository.Tags.Last()}");
+            _updateText.AppendLine($"  ->  Publishing package(s) as version {GitRepository.Tags.Last()}");
 
             var packageFiles = ArtifactsDirectory
                 .GlobFiles("*.nupkg")

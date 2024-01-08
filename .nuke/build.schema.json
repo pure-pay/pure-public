@@ -84,6 +84,7 @@
               "Pack",
               "Publish",
               "Restore",
+              "Status",
               "Test"
             ]
           }
@@ -107,6 +108,7 @@
               "Pack",
               "Publish",
               "Restore",
+              "Status",
               "Test"
             ]
           }
