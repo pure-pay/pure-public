@@ -38,13 +38,13 @@ class Build : PureNukeBuild
 
     protected override string ProjectTitle => "Pure.Public";
 
-    protected Target Status => _ => _
-    .Executes(() =>
-    {
-        Console.WriteLine($"Git Branch: {GitRepository.Branch}");
-        Console.WriteLine($"Git Tag(s): {string.Join(",", GitRepository.Tags?.ToArray())}");
-        Console.WriteLine($"MinVer.FileVersion = {MinVer.FileVersion}");
-    });
+    Target Status => _ => _
+        .Executes(() =>
+        {
+            Console.WriteLine($"Git Branch: {GitRepository.Branch}");
+            Console.WriteLine($"Git Tag(s): {string.Join(",", GitRepository.Tags?.ToArray())}");
+            Console.WriteLine($"MinVer.FileVersion = {MinVer.FileVersion}");
+        });
 
     Target Clean => _ => _
         .Executes(() =>
@@ -69,7 +69,6 @@ class Build : PureNukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
-                .SetVersion(MinVer.FileVersion)
                 .EnableNoRestore());
         });
 
@@ -104,7 +103,7 @@ class Build : PureNukeBuild
         .DependsOn(Pack)
         .Executes(() =>
         {
-            _updateText.AppendLine($"  ->  Publishing package(s) as version {GitRepository.Tags.Last()}");
+            AddNotification($"  ->  Publishing package(s) as version {GitRepository.Tags.Last()}");
 
             var packageFiles = ArtifactsDirectory
                 .GlobFiles("*.nupkg")

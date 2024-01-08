@@ -46,28 +46,28 @@ public abstract class PureNukeBuild : NukeBuild
 
     protected override void OnBuildCreated()
     {
-        _updateText.AppendLine($"Building *{ProjectTitle}*...");
+        AddNotification($"Building *{ProjectTitle}*...");
 
         base.OnBuildCreated();
     }
 
     protected override void OnTargetFailed(string target)
     {
-        _updateText.AppendLine($" • {target} failed");
+        AddNotification($" • {target} failed");
 
         base.OnTargetFailed(target);
     }
 
     protected override void OnTargetSucceeded(string target)
     {
-        _updateText.AppendLine($" • {target} succeeded");
+        AddNotification($" • {target} succeeded");
 
         base.OnTargetSucceeded(target);
     }
 
     protected override void OnBuildFinished()
     {
-        _updateText.AppendLine("Completed");
+        AddNotification("Completed");
 
         NotifyBuildUpdate(_updateText.ToString());
 
@@ -97,4 +97,7 @@ public abstract class PureNukeBuild : NukeBuild
 
         return zipFile;
     }
+
+    protected void AddNotification(string message) =>
+        _updateText.AppendLine(message);
 }
