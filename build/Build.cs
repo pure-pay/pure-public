@@ -9,7 +9,9 @@ using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
 using Pure.Utilities.Nuke;
 using System;
@@ -20,8 +22,8 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     "continuous",
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
-    InvokedTargets = new[] { nameof(Publish) },
-    ImportSecrets = new[] { nameof(NugetApiKey), nameof(SlackWebhook) })]
+    InvokedTargets = [nameof(Publish)],
+    ImportSecrets = [nameof(NugetApiKey), nameof(SlackWebhook)])]
 class Build : PureNukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Compile);
@@ -35,6 +37,21 @@ class Build : PureNukeBuild
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
+    [Solution]
+    readonly Solution Solution;
+
+    [GitRepository]
+    readonly GitRepository GitRepository = default!;
+
+    [MinVer]
+    readonly MinVer MinVer = default!;
+
+    AbsolutePath SourceDirectory => RootDirectory / "src";
+
+    AbsolutePath TestDirectory => RootDirectory / "test";
+
+    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
     protected override string ProjectTitle => "Pure.Public";
 

@@ -6,10 +6,7 @@
 //  * The MIT License, see https://opensource.org/license/mit/
 
 using Nuke.Common;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
-using Nuke.Common.ProjectModel;
-using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Tools.Slack;
 using System;
 using System.IO;
@@ -26,21 +23,6 @@ public abstract class PureNukeBuild : NukeBuild
     [Parameter]
     [Secret]
     protected readonly string SlackWebhook = default!;
-
-    [Solution]
-    protected readonly Solution Solution = default!;
-
-    [GitRepository]
-    protected readonly GitRepository GitRepository = default!;
-
-    [MinVer]
-    protected readonly MinVer MinVer = default!;
-
-    protected AbsolutePath SourceDirectory => RootDirectory / "src";
-
-    protected AbsolutePath TestDirectory => RootDirectory / "test";
-
-    protected AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
     protected abstract string ProjectTitle { get; }
 
