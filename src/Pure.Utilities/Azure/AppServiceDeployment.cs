@@ -34,7 +34,7 @@ public class AppServiceDeployment
 
         httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", base64Auth);
 
-        var requestUrl = $"{appServiceName}.scm.azurewebsites.net:443";
+        var requestUrl = $"https://{appServiceName}.scm.azurewebsites.net:443";
 
         _logger.Information("Deploying {bytes} bytes to {url}", fileContents.Length, requestUrl);
 
