@@ -5,6 +5,7 @@
 //
 //  * The MIT License, see https://opensource.org/license/mit/
 
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Pure.Utilities.Diagnostics;
@@ -13,4 +14,7 @@ public static class AssemblyExtensions
 {
     public static DateTime GetBuildTimestamp(this Assembly assembly) =>
         (new FileInfo(assembly.Location)).LastWriteTime;
+
+    public static string GetFileVersion(this Assembly assembly) =>
+        FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion ?? "0.0.0.0";
 }

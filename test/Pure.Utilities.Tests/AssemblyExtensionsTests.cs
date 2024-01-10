@@ -14,12 +14,22 @@ namespace Pure.Utilities.Tests;
 public class AssemblyExtensionsTests
 {
     [Fact]
-    public void CheckBuildTime()
+    public void CheckBuildTimestamp()
     {
         var assembly = Assembly.GetExecutingAssembly();
 
         var timestamp = assembly.GetBuildTimestamp();
 
-        timestamp.Should().BeCloseTo(DateTime.Now, new TimeSpan(0,1,0));
+        timestamp.Should().BeCloseTo(DateTime.Now, new TimeSpan(0, 1, 0));
+    }
+
+    [Fact]
+    public void CheckFileVersion()
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+
+        var version = assembly.GetFileVersion();
+
+        version.Should().StartWith("1.");
     }
 }
