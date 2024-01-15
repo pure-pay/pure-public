@@ -31,12 +31,14 @@ public class TestServicesProvider : IServiceProvider
     public void Build() => _host = _hostBuilder.Build();
 
     public IServiceCollection AddSingleton<TService>(TService implementationInstance) where TService : class =>
-        _services.AddSingleton(implementationInstance);
+        _host == null ? _services.AddSingleton(implementationInstance) :
+            throw new InvalidOperationException("All services must be added before Build() is called");
 
     public IServiceCollection AddSingleton<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService =>
-        _services.AddSingleton<TService, TImplementation>();
+        _host == null ? _services.AddSingleton<TService, TImplementation>() :
+            throw new InvalidOperationException("All services must be added before Build() is called");
 
     public TService? GetService<TService>() => Services.GetService<TService>();
 
