@@ -8,13 +8,11 @@
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.Slack;
-using System;
-using System.IO;
 using System.IO.Compression;
 using System.Text;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
-namespace Pure.Utilities.Nuke;
+namespace Pure.Build.Utilities.Nuke;
 
 public abstract class PureNukeBuild : NukeBuild
 {

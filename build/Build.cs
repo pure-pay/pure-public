@@ -13,7 +13,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
-using Pure.Utilities.Nuke;
+using Pure.Build.Utilities.Nuke;
 using Serilog;
 using System;
 using System.Linq;
