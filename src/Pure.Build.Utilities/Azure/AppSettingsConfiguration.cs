@@ -9,7 +9,7 @@ using Nuke.Common.IO;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace Pure.Utilities.Azure;
+namespace Pure.Build.Utilities.Azure;
 
 public class AppSettingsConfiguration : IDisposable
 {

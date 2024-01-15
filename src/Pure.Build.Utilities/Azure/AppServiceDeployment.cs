@@ -7,7 +7,7 @@
 
 using System.Text;
 
-namespace Pure.Utilities.Azure;
+namespace Pure.Build.Utilities.Azure;
 
 public class AppServiceDeployment
 {
