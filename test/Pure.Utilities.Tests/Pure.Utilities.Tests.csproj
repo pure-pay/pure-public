@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Pure.Utilities\Pure.Utilities.csproj" />
+    <ProjectReference Include="..\..\src\Pure.Runtime.Utilities\Pure.Runtime.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

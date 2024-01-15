@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Pure.Utilities\Pure.Utilities.csproj" />
+    <ProjectReference Include="..\src\Pure.Build.Utilities\Pure.Build.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

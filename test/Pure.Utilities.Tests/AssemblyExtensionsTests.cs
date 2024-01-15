@@ -6,7 +6,7 @@
 //  * The MIT License, see https://opensource.org/license/mit/
 
 using FluentAssertions;
-using Pure.Utilities.Diagnostics;
+using Pure.Runtime.Utilities.Diagnostics;
 using System.Reflection;
 
 namespace Pure.Utilities.Tests;
