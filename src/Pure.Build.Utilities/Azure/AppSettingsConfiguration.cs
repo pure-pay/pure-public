@@ -18,7 +18,7 @@ public class AppSettingsConfiguration : IDisposable
     private readonly JsonNode _jsonContent;
     private bool _disposed;
 
-    public AppSettingsConfiguration(AbsolutePath configFile, Serilog.ILogger logger)
+    public AppSettingsConfiguration(in AbsolutePath configFile, in Serilog.ILogger logger)
     {
         _configFile = configFile;
         _logger = logger;
@@ -32,7 +32,7 @@ public class AppSettingsConfiguration : IDisposable
             throw new InvalidOperationException($"Unable to parse configuration file '{configFile}'");
     }
 
-    public void UpdateValue(string section, string key, string value)
+    public void UpdateValue(in string section, in string key, in string value)
     {
         var jsonSection = _jsonContent[section] ??
             throw new ArgumentException($"Invalid section: '{section}'", nameof(section));

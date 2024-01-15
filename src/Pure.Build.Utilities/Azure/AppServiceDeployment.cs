@@ -13,12 +13,16 @@ public class AppServiceDeployment
 {
     private readonly Serilog.ILogger _logger;
 
-    public AppServiceDeployment(Serilog.ILogger logger)
+    public AppServiceDeployment(in Serilog.ILogger logger)
     {
         _logger = logger;
     }
 
-    public async Task DeployAsync(string zipFilePath, string appServiceName, string username, string password)
+    public async Task DeployAsync(
+        /* in */ string zipFilePath,
+        /* in */ string appServiceName,
+        /* in */ string username,
+        /* in */ string password)
     {
         var base64Auth = Convert.ToBase64String(Encoding.Default.GetBytes($"{username}:{password}"));
 

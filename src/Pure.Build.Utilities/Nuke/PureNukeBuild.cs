@@ -66,7 +66,7 @@ public abstract class PureNukeBuild : NukeBuild
         }
     }
 
-    protected AbsolutePath CreateZipDeployment(AbsolutePath artifactsDirectory, AbsolutePath deploymentDirectory)
+    protected AbsolutePath CreateZipDeployment(in AbsolutePath artifactsDirectory, in AbsolutePath deploymentDirectory)
     {
         var zipFile = deploymentDirectory / "deployment.zip";
 
@@ -81,6 +81,6 @@ public abstract class PureNukeBuild : NukeBuild
         return zipFile;
     }
 
-    protected void AddNotification(string message) =>
+    protected void AddNotification(in string message) =>
         _updateText.AppendLine(message);
 }
