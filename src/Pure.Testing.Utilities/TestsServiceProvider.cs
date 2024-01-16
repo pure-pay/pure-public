@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Pure.Testing.Utilities;
 
-public class TestServicesProvider : IServiceProvider
+public class TestsServiceProvider : IServiceProvider
 {
     private readonly HostApplicationBuilder _hostBuilder;
     private readonly IServiceCollection _services;
@@ -20,7 +20,7 @@ public class TestServicesProvider : IServiceProvider
     private IServiceProvider Services => _host?.Services ??
         throw new InvalidOperationException("Service host not initialised; call Build() before any calls to GetService()");
 
-    public TestServicesProvider()
+    public TestsServiceProvider()
     {
         _hostBuilder = new HostApplicationBuilder();
         _services = _hostBuilder.Services;
@@ -39,6 +39,14 @@ public class TestServicesProvider : IServiceProvider
         where TImplementation : class, TService =>
         _host == null ? _services.AddSingleton<TService, TImplementation>() :
             throw new InvalidOperationException("All services must be added before Build() is called");
+
+    public IServiceCollection AddSingleton<TService>(Func<IServiceProvider, TService> implementationFactory)
+        where TService : class =>
+        _host == null ? _services.AddSingleton<TService>(implementationFactory) :
+            throw new InvalidOperationException("All services must be added before Build() is called");
+
+    public TService GetRequiredService<TService>() where TService : class =>
+        Services.GetRequiredService<TService>();
 
     public TService? GetService<TService>() => Services.GetService<TService>();
 
