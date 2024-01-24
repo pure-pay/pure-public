@@ -19,10 +19,11 @@ using System;
 using System.Linq;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-[GitHubActions(
+[PureGitHubActions(
     "continuous",
     GitHubActionsImage.UbuntuLatest,
     On = [GitHubActionsTrigger.Push],
+    Services = [GitHubActionsServices.SqlServerService],
     InvokedTargets = [nameof(Publish)],
     ImportSecrets = [nameof(NugetApiKey), nameof(SlackWebhook)])]
 class Build : PureNukeBuild
