@@ -14,7 +14,6 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
 using Pure.Build.Utilities.Nuke;
-using Serilog;
 using System;
 using System.Linq;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
