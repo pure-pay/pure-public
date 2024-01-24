@@ -12,7 +12,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Pure.Build.Utilities.Nuke;
 
-internal class PureGitHubActionsJob : GitHubActionsJob
+public class PureGitHubActionsJob : GitHubActionsJob
 {
     public string[] Services { get; set; } = [];
 
