@@ -13,6 +13,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using System.Diagnostics;
 
 namespace Pure.Build.Utilities.Nuke;
 
@@ -46,6 +47,7 @@ public class PureGitHubActionsAttribute(string name, GitHubActionsImage image, p
 
     protected override GitHubActionsJob GetJobs(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
     {
+        Debugger.Break();
         return new PureGitHubActionsJob
         {
             Name = image.GetValue().Replace(".", "_"),
