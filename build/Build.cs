@@ -91,6 +91,7 @@ class Build : PureNukeBuild
         });
 
     Target Test => _ => _
+        .OnlyWhenDynamic(() => GitRepository.Tags.Any())
         .DependsOn(Compile)
         .Executes(() =>
         {
@@ -102,6 +103,7 @@ class Build : PureNukeBuild
         });
 
     Target Pack => _ => _
+        .OnlyWhenDynamic(() => GitRepository.Tags.Any())
         .DependsOn(Test)
         .Executes(() =>
         {

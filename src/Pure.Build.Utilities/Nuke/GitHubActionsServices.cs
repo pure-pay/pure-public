@@ -27,11 +27,19 @@ public static class GitHubActionsServices
         var lines = serviceText.Split(Environment.NewLine);
 
         for (var i = 0; i < lines.Length; i++)
+            WriteLineIndented(lines[i], writer, indentFunc);
+    }
+
+    private static void WriteLineIndented(string line, Action<string> writer, Func<IDisposable> indentFunc)
+    {
+        if (line[0] == ' ')
         {
             using (indentFunc())
             {
-                writer(lines[i]);
+                WriteLineIndented(line.Remove(0, 2), writer, indentFunc);
             }
         }
+        else
+            writer(line);
     }
 }
