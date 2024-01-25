@@ -5,6 +5,7 @@
 //
 //  * The MIT License, see https://opensource.org/license/mit/
 
+using Azure.Core.GeoJson;
 using System.Text;
 
 namespace Pure.Build.Utilities.Nuke;
@@ -24,7 +25,9 @@ public static class GitHubActionsServices
 
     public static void WriteYaml(string serviceText, Action<string> writer, Func<IDisposable> indentFunc)
     {
-        var lines = serviceText.Split(Environment.NewLine);
+        var nl = serviceText.Contains("\r\n") ? "\r\n" : "\n";
+
+        var lines = serviceText.Split(nl, StringSplitOptions.RemoveEmptyEntries);
 
         for (var i = 0; i < lines.Length; i++)
             WriteLineIndented(lines[i], writer, indentFunc);
