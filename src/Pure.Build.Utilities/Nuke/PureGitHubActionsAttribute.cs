@@ -47,7 +47,6 @@ public class PureGitHubActionsAttribute(string name, GitHubActionsImage image, p
 
     protected override GitHubActionsJob GetJobs(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
     {
-        Debugger.Break();
         return new PureGitHubActionsJob
         {
             Name = image.GetValue().Replace(".", "_"),
@@ -60,7 +59,7 @@ public class PureGitHubActionsAttribute(string name, GitHubActionsImage image, p
         };
     }
 
-    private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+    private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsImage _, IReadOnlyCollection<ExecutableTarget> relevantTargets)
     {
         yield return new GitHubActionsCheckoutStep
         {

@@ -32,7 +32,7 @@ public static class GitHubActionsServices
 
     private static void WriteLineIndented(string line, Action<string> writer, Func<IDisposable> indentFunc)
     {
-        if (line[0] == ' ')
+        if (line.StartsWith("  ", StringComparison.OrdinalIgnoreCase))
         {
             using (indentFunc())
             {
