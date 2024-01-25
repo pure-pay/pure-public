@@ -29,7 +29,10 @@ public class PureGitHubActionsJob : GitHubActionsJob
             {
                 writer.WriteLine("services:");
 
-                GitHubActionsServices.WriteYaml(Services[0], writer.WriteLine, writer.Indent);
+                using (writer.Indent())
+                {
+                    GitHubActionsServices.WriteYaml(Services[0], writer.WriteLine, writer.Indent);
+                }
             }
 
             if (TimeoutMinutes > 0)
